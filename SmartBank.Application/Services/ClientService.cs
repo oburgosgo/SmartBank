@@ -20,15 +20,13 @@ namespace SmartBank.Application.Services
             this._mapper = mapper;
         }
 
-        
-
         public async Task<bool> DeleteClientById(Guid id)
         {
          
             var client = await _clientRepository.GetClientById(id);
-            await _clientRepository.DeleteClient(client);
+            var result = await _clientRepository.DeleteClient(client);
 
-            return true;
+            return result;
         }
 
         public async Task<ClientDto> GetClientById(Guid id)
@@ -48,15 +46,16 @@ namespace SmartBank.Application.Services
         public async Task<bool> AddClient(AddClientRequest request)
         {
 
-            await _clientRepository.AddClient(_mapper.Map<Client>(request));
+            var result= await _clientRepository.AddClient(_mapper.Map<Client>(request));
 
-            return true;
+            return result;
         }
 
         public async Task<bool> UpdateClient(Guid id, UpdateClientRequest request)
         {
 
             var client = await _clientRepository.GetClientById(id);
+            var result = false;
             if (client != null)
             {
                 client.Phone = request.Phone;
@@ -68,11 +67,11 @@ namespace SmartBank.Application.Services
                 client.Gender = request.Gender;
                 client.BurnDate = request.BurnDate;
                 client.UpdatedAt = DateTime.Now;
+                
+                result = await this._clientRepository.UpdateClient(client);
             }
 
-            await this._clientRepository.UpdateClient(client);
-
-            return true;
+            return result;
         }
     }
 }
