@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartBank.Test", "SmartBank
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartBank.Test", "SmartBank.Test\SmartBank.Test.csproj", "{32378967-ED41-4F38-AE23-08C013D95B7F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartBank.UI", "SmartBank.UI", "{687D5634-2AB6-4504-B2C8-00BB60F9D5C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

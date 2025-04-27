@@ -125,8 +125,6 @@ namespace SmartBank.Test.Services
         public async Task GetClientById_ShouldReturnNull_WhenClientDoesntExist()
         {
 
-            var client = GetClient();
-
             var clientId = new Guid("0FE03CC3-A5D8-4D7B-AA1D-78F58E113280");
             var clientDto = GetClientDto();
 
@@ -136,6 +134,94 @@ namespace SmartBank.Test.Services
 
         }
 
+        [Fact]
+        public async Task DeleteClientById_ShouldReturnTrue_WhenClientIsDeleted()
+        {
+            var client = GetClient();
+            var clientId = new Guid("0FE03CC3-A5D8-4D7B-AA1D-78F58E113280");
+
+            this._clientRepositoryMock.Setup(x => x.DeleteClient(client)).ReturnsAsync(true);
+            this._clientRepositoryMock.Setup(x => x.GetClientById(clientId)).ReturnsAsync(client);
+
+            var result = await _clientService.DeleteClientById(clientId);
+
+            result.Should().BeTrue();
+
+            this._clientRepositoryMock.Verify(x => x.DeleteClient(client), Times.Once);
+            this._clientRepositoryMock.Verify(x => x.GetClientById(clientId), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteClientById_ShouldReturnFalse_WhenClientIsNotDeleted()
+        {
+            var client = GetClient();
+            var clientId = new Guid("0FE03CC3-A5D8-4D7B-AA1D-78F58E113280");
+
+            this._clientRepositoryMock.Setup(x=>x.DeleteClient(client)).ReturnsAsync(false);
+            this._clientRepositoryMock.Setup(x => x.GetClientById(clientId)).ReturnsAsync(client);
+
+            var result =await _clientService.DeleteClientById(clientId);
+
+            result.Should().BeFalse();
+
+            this._clientRepositoryMock.Verify(x=>x.DeleteClient(client),Times.Once);
+            this._clientRepositoryMock.Verify(x=>x.GetClientById(clientId),Times.Once);
+        }
+
+        [Fact]
+        public async Task GetClients_ShouldReturnList_WhenClientsExist()
+        {
+            var clients = GetClients();
+            var clientsDto = GetClientsDto();
+
+            this._clientRepositoryMock.Setup(x => x.GetClients()).ReturnsAsync(clients);
+            this._mapperMock.Setup(x => x.Map<List<ClientDto>>(clients)).Returns(clientsDto);
+
+            var result = await _clientService.GetClients();
+
+            result.Should().NotBeNullOrEmpty();
+
+            _mapperMock.Verify(x => x.Map<List<ClientDto>>(clients), Times.Once);
+            _clientRepositoryMock.Verify(x => x.GetClients(), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetClients_ShouldReturnEmptyList_WhenClientsDontExist()
+        {
+
+            var clients = new List<Client>();
+            var clientsDto = new List<ClientDto>();
+
+            this._clientRepositoryMock.Setup(x=>x.GetClients()).ReturnsAsync(clients);
+            this._mapperMock.Setup(x=>x.Map<List<ClientDto>>(clients)).Returns(clientsDto);
+
+            var result = await this._clientService.GetClients();
+
+            result.Should().BeEmpty();
+
+            this._clientRepositoryMock.Verify(x=>x.GetClients(),Times.Once);
+            this._mapperMock.Verify(x => x.Map<List<ClientDto>>(clients), Times.Once);
+        }
+        
+        private List<Client> GetClients()
+        {
+            var result = new List<Client>();
+            result.Add(GetClient());
+            result.Add(GetClient());
+            result.Add(GetClient());
+
+            return result;
+        }
+
+        private List<ClientDto> GetClientsDto()
+        {
+            var result = new List<ClientDto>();
+            result.Add(GetClientDto());
+            result.Add(GetClientDto());
+            result.Add(GetClientDto());
+
+            return result;
+        }
         private ClientDto GetClientDto()
         {
             return new ClientDto()
