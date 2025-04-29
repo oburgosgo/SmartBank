@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { loginAPI } from "../../services/AuthService";
 import { useAuth } from "../../hooks/useAuth";
+import { CardContent, CardFooter, CardHeader, CardTitle } from "../../components/ui/Card";
+import { Button } from "../../components/ui/Button";
+import { Label } from "../../components/ui/Label";
+import { Input } from "../../components/ui/Input";
 
 
 export default function Login() {
@@ -24,28 +28,50 @@ export default function Login() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
-            <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md w-80">
-                <h2 className="text-2xl font-bold mb-4">Login</h2>
-                {error && <p className="text-red-500">{error}</p>}
-                <input
-                    type="text"
-                    placeholder="Email"
-                    className="w-full mb-3 p-2 border rounded"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    className="w-full mb-3 p-2 border rounded"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-                    Login
-                </button>
-            </form>
+        <div className="flex flex-col justify-center h-full">
+            <CardHeader className="space-y-1 pb-6">
+                <CardTitle className="text-2xl font-bold">Sign In</CardTitle>
+            </CardHeader>
+            <CardContent className="px-6 pb-4 flex-grow">
+                <form onSubmit={handleLogin} className="flex flex-col h-full justify-center">
+                    <div className="grid w-full items-center gap-4">
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="email">Username</Label>
+                            <Input
+                                id="username"
+                                type="text"
+                                placeholder="Enter your username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="password">Password</Label>
+                            <Input
+                                id="password"
+                                type="password"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+                    <Button className="w-full mt-6" type="submit">
+                        Sign In
+                    </Button>
+                </form>
+            </CardContent>
+            <CardFooter className="flex flex-col sm:flex-row justify-between gap-2 px-6 py-4 border-t mt-auto">
+                <Button variant="link" className="h-auto p-0" >
+                    Don't have an account? Sign Up
+                </Button>
+                <Button variant="link" className="h-auto p-0">
+                    Forgot password?
+                </Button>
+            </CardFooter>
+            {error}
         </div>
     );
 }

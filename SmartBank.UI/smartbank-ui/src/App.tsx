@@ -1,5 +1,4 @@
 
-import './App.css'
 import Login from './pages/login/Login'
 
 function App() {
@@ -8,10 +7,7 @@ function App() {
   return (
     <>
 
-
-      <div className="card">
-        <Login></Login>
-      </div>
+      <Login />
 
     </>
   )
