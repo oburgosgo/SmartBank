@@ -35,6 +35,7 @@ export default function Login() {
     return (
         <div className="flex items-center justify-center h-full w-full">
             <Card className="w-full h-full border-0 md:border shadow-none md:shadow-sm flex flex-col rounded-xl md:rounded-none md:rounded-r-xl">
+
                 <div className="flex flex-col justify-center h-full">
                     <CardHeader className="space-y-1 pb-6">
                         <CardTitle className="text-2xl font-bold">Sign In</CardTitle>
@@ -46,8 +47,8 @@ export default function Login() {
                                     <Label htmlFor="email">Username</Label>
                                     <Input
                                         id="username"
-                                        type="text"
-                                        placeholder="Enter your username"
+                                        type="username"
+                                        placeholder="Enter your email"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                         required
@@ -78,8 +79,9 @@ export default function Login() {
                             Forgot password?
                         </Button>
                     </CardFooter>
-                    {error}
                 </div>
+
+                {error}
             </Card>
         </div>
     );
