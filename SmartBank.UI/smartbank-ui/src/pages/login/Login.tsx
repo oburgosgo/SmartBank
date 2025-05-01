@@ -5,11 +5,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../comp
 import { Button } from "../../components/ui/Button";
 import { Label } from "../../components/ui/Label";
 import { Input } from "../../components/ui/Input";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const [error, setError] = useState("");
 
@@ -19,6 +21,9 @@ export default function Login() {
         event.preventDefault();
         try {
             const token = await loginAPI(username, password);
+
+            navigate("/dashboard");
+
             login(token);
         }
         catch (error) {
