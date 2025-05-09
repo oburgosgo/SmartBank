@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { loginAPI } from "../../services/AuthService";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
@@ -11,20 +10,26 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const { login, isAuthenticaded } = useAuth();
     const navigate = useNavigate();
 
-    const [error, setError] = useState("");
+    useEffect(() => {
+        if (isAuthenticaded) {
+            navigate("/dashboard");
+        }
+    }, [isAuthenticaded, navigate]);
 
-    const { login } = useAuth();
+
+
 
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+
         event.preventDefault();
+
         try {
-            const token = await loginAPI(username, password);
+            await login(username, password);
 
-            navigate("/dashboard");
-
-            login(token);
         }
         catch (error) {
             console.error(error);
