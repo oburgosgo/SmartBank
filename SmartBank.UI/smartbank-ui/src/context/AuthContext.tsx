@@ -1,12 +1,14 @@
 import { createContext, ReactNode, useState } from "react";
 import { SuccessAuthResponse } from "../interfaces/AuthResponse";
-import { loginAPI } from "../services/AuthService";
+import { loginAPI, registerAPI } from "../services/AuthService";
+import { SignUpRequest } from "../interfaces/SignUpRequest";
 
 type AuthContextType = {
     isAuthenticaded: boolean,
     accessToken: string | null,
     login: (username: string, password: string) => Promise<SuccessAuthResponse>,
-    logout: () => void
+    logout: () => void,
+    register: (signUpRequest: SignUpRequest) => Promise<boolean>
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,6 +25,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return response;
     };
 
+    const register = async (signUpRequest: SignUpRequest) => {
+        const response = await registerAPI(signUpRequest);
+
+        return response;
+    }
+
     const logout = () => {
         // setAccessToken("");
     };
@@ -33,6 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             accessToken: auth?.accessToken ?? null,
             login,
             logout,
+            register,
         }}> {children}</AuthContext.Provider >
     );
 };
