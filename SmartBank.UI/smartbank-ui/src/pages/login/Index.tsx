@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Login from "./Login";
 import { FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa"
+import AuthForm from "./AuthForm";
 
 
 export default function LoginPage() {
@@ -56,7 +56,7 @@ export default function LoginPage() {
 
                 {/* Right side - White background with login form */}
                 <div className="w-full md:w-1/2 flex flex-col">
-                    <Login />
+                    <AuthForm />
                 </div>
             </div>
         </div>

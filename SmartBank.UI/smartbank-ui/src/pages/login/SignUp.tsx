@@ -6,7 +6,13 @@ import { Label } from "../../components/ui/Label";
 import { SignUpRequest } from "../../interfaces/SignUpRequest";
 import { useAuth } from "../../hooks/useAuth";
 
-export default function SignUp() {
+
+interface SignUpProps {
+    onFormChange: (form: string) => void;
+
+}
+
+export default function SignUp({ onFormChange }: SignUpProps) {
 
     const [formData, setFormData] = useState<SignUpRequest>({
         userName: "",
@@ -29,6 +35,10 @@ export default function SignUp() {
 
     const handleSubmit = async () => {
         const registerResponse = await register(formData);
+
+        if (registerResponse) {
+            onFormChange("verify-phone")
+        }
     }
 
     return (
@@ -91,7 +101,7 @@ export default function SignUp() {
                 </form>
             </CardContent>
             <CardFooter>
-                <Button variant="link" >
+                <Button variant="link" onClick={() => onFormChange("signin")} >
                     Already have an account? Sign In
                 </Button>
             </CardFooter>
