@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card } from "../../components/ui/Card";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import PhoneOtpVerification from "./PhoneOtpVerification";
 
 
 
@@ -16,6 +17,8 @@ export default function AuthForm() {
                 return <Login onFormChange={setForm} />
             case "signup":
                 return <SignUp onFormChange={setForm} />
+            case "verify-phone":
+                return <PhoneOtpVerification phoneNumber="" />
             default:
                 return <Login onFormChange={setForm} />
         }

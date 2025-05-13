@@ -15,7 +15,6 @@ interface SignUpProps {
 export default function SignUp({ onFormChange }: SignUpProps) {
 
     const [formData, setFormData] = useState<SignUpRequest>({
-        userName: "",
         email: "",
         password: "",
         passwordConfirmed: "",
@@ -33,11 +32,16 @@ export default function SignUp({ onFormChange }: SignUpProps) {
 
     }
 
-    const handleSubmit = async () => {
-        const registerResponse = await register(formData);
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
-        if (registerResponse) {
-            onFormChange("verify-phone")
+        e.preventDefault();
+
+        if (formData.password === formData.passwordConfirmed) {
+            const registerResponse = await register(formData);
+
+            if (registerResponse) {
+                onFormChange("verify-phone")
+            }
         }
     }
 
@@ -54,6 +58,7 @@ export default function SignUp({ onFormChange }: SignUpProps) {
                             <Input
                                 id="email"
                                 type="email"
+                                name="email"
                                 placeholder="Enter your email"
                                 value={formData.email}
                                 onChange={(e) => handleChange(e)}
@@ -65,6 +70,7 @@ export default function SignUp({ onFormChange }: SignUpProps) {
                             <Input
                                 id="password"
                                 type="password"
+                                name="password"
                                 placeholder="Create a password"
                                 value={formData.password}
                                 onChange={(e) => handleChange(e)}
@@ -78,6 +84,7 @@ export default function SignUp({ onFormChange }: SignUpProps) {
                                 id="confirm-password"
                                 type="password"
                                 placeholder="Confirm your password"
+                                name="passwordConfirmed"
                                 value={formData.passwordConfirmed}
                                 onChange={(e) => handleChange(e)}
                                 required
@@ -88,6 +95,7 @@ export default function SignUp({ onFormChange }: SignUpProps) {
                             <Input
                                 id="phone"
                                 type="tel"
+                                name="phoneNumber"
                                 placeholder="Enter your phone number"
                                 value={formData.phoneNumber}
                                 onChange={(e) => handleChange(e)}

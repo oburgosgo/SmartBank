@@ -10,7 +10,7 @@ const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL;
 export async function registerAPI(signUpRequest: SignUpRequest): Promise<boolean> {
 
     try {
-        const registerResponse = await axios.post(`${AUTH_API_URL}`, signUpRequest);
+        const registerResponse = await axios.post(`${AUTH_API_URL}api/User`, signUpRequest);
 
         return registerResponse.data;
     }

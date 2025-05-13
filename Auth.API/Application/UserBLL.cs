@@ -40,7 +40,7 @@ namespace Auth.API.Application
 
         public async Task<bool> Register(UserModel request)
         {
-            var user = new IdentityUser { UserName = request.UserName, 
+            var user = new IdentityUser { UserName = request.Email, 
                                           TwoFactorEnabled = request.TwoFactor,
                                           Email = request.Email,
                                           PhoneNumber = request.PhoneNumber};
