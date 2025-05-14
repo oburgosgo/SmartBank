@@ -12,6 +12,8 @@ namespace SmartBank.Shared.API.Reponse
         public string? Message { get; set; }
         public T? Data { get; set; }
 
+        public List<string>? Errors { get; set; }
+
         public static APIResponse<T> Ok(T? data, string message) =>
              new() { Success = true, Data = data, Message = message };
 

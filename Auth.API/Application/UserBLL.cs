@@ -38,7 +38,7 @@ namespace Auth.API.Application
             return users;
         }
 
-        public async Task<bool> Register(UserModel request)
+        public async Task<IdentityResult> Register(UserModel request)
         {
             var user = new IdentityUser { UserName = request.Email, 
                                           TwoFactorEnabled = request.TwoFactor,
@@ -47,7 +47,7 @@ namespace Auth.API.Application
 
             var result =await _userManager.CreateAsync(user, request.Password);
 
-            return result.Succeeded;
+            return result;
         }
     }
 }

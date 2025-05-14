@@ -2,13 +2,14 @@ import { createContext, ReactNode, useState } from "react";
 import { SuccessAuthResponse } from "../interfaces/AuthResponse";
 import { loginAPI, registerAPI } from "../services/AuthService";
 import { SignUpRequest } from "../interfaces/SignUpRequest";
+import { SignUpResponse } from "../types/SignUpResponse";
 
 type AuthContextType = {
     isAuthenticaded: boolean,
     accessToken: string | null,
     login: (username: string, password: string) => Promise<SuccessAuthResponse>,
     logout: () => void,
-    register: (signUpRequest: SignUpRequest) => Promise<boolean>
+    register: (signUpRequest: SignUpRequest) => Promise<SignUpResponse>
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);

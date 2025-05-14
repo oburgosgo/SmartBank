@@ -3,16 +3,20 @@ import { parse } from "valibot";
 import { TokenResponseSchema } from "../schemas/auth.schema";
 import { SuccessAuthResponse } from "../interfaces/AuthResponse";
 import { SignUpRequest } from "../interfaces/SignUpRequest";
+import { SignUpResponseSchema } from "../schemas/sign-up.schema";
+import { SignUpResponse } from "../types/SignUpResponse";
 
 const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL;
 
 
-export async function registerAPI(signUpRequest: SignUpRequest): Promise<boolean> {
+export async function registerAPI(signUpRequest: SignUpRequest): Promise<SignUpResponse> {
 
     try {
-        const registerResponse = await axios.post(`${AUTH_API_URL}api/User`, signUpRequest);
+        const signUpResponse = await axios.post(`${AUTH_API_URL}api/User`, signUpRequest);
 
-        return registerResponse.data;
+        const response = parse(SignUpResponseSchema, signUpResponse);
+
+        return response;
     }
     catch (error) {
 

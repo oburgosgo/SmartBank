@@ -20,4 +20,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartBank.Shared\SmartBank.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

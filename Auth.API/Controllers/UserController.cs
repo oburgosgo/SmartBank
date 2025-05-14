@@ -1,6 +1,7 @@
 ﻿using Auth.API.Interfaces;
 using Auth.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using SmartBank.Shared.API.Reponse;
 
 namespace Auth.API.Controllers
 {
@@ -17,9 +18,28 @@ namespace Auth.API.Controllers
         public async Task<IActionResult> Register([FromBody] UserModel request)
         {
 
-            var isUserCreated =await _userManager.Register(request);
+            
+            var result =await _userManager.Register(request);
 
-            return Ok(isUserCreated);
+            if (result.Succeeded)
+            {
+                return Ok(new APIResponse<object>
+                {
+                    Success = true,
+                    Data = null,
+                    Message = "User created succesfully"
+                });
+            }
+            else
+            {
+                return BadRequest(new APIResponse<object>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = "User creation failed",
+                    Errors = result.Errors.Select(x => x.Description).ToList()
+                });
+            }
         }
 
         [HttpGet]
