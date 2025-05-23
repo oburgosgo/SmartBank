@@ -33,6 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartBank.Shared", "SmartBa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartBank.Shared", "SmartBank.Shared\SmartBank.Shared.csproj", "{60D75693-9D21-4B95-B862-A985D59B5CE3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification.API", "Notification.API", "{46F3AE9D-8136-44B3-8E1B-E0895926458E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.API", "Notification.API\Notification.API.csproj", "{8EB81E07-1334-48C6-B085-58D51F80758A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,10 @@ Global
 		{60D75693-9D21-4B95-B862-A985D59B5CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60D75693-9D21-4B95-B862-A985D59B5CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60D75693-9D21-4B95-B862-A985D59B5CE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EB81E07-1334-48C6-B085-58D51F80758A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EB81E07-1334-48C6-B085-58D51F80758A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EB81E07-1334-48C6-B085-58D51F80758A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EB81E07-1334-48C6-B085-58D51F80758A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +87,7 @@ Global
 		{13F52D5D-BC03-4E3D-BE07-3C4BA68D3F4A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{32378967-ED41-4F38-AE23-08C013D95B7F} = {068A17DE-233C-43C1-8048-EE4BCF3DBC94}
 		{60D75693-9D21-4B95-B862-A985D59B5CE3} = {F1A06A87-0D4E-4A97-94C2-9628803F0C9F}
+		{8EB81E07-1334-48C6-B085-58D51F80758A} = {46F3AE9D-8136-44B3-8E1B-E0895926458E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6179E3CF-FF20-45B0-8A8F-E6086CBE8257}

@@ -42,12 +42,14 @@ builder.Services.AddDbContext<AuthDBContext>(
 
 builder.Services.AddScoped<IUser, UserBLL>();
 builder.Services.AddScoped<IAuth, AuthBLL>();
+builder.Services.AddScoped<IOtpProvider, OtpProvider>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
+    var connectionString = builder.Configuration.GetConnectionString("Redis");
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
     options.InstanceName = "AuthAPI_";
 });

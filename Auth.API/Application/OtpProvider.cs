@@ -1,8 +1,10 @@
 ﻿using Auth.API.Interfaces;
 using Auth.API.Models;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using static System.Net.WebRequestMethods;
 
 namespace Auth.API.Application
 {
@@ -17,7 +19,9 @@ namespace Auth.API.Application
         public async Task<bool> GenerateOtp(GenerateOtpRequest request)
         {
 
-            throw new NotImplementedException();
+            await StoreOtp(request.Username, GenerateOtp(), TimeSpan.FromMinutes(5));
+
+            return true;
         }
 
 
@@ -25,7 +29,7 @@ namespace Auth.API.Application
         {
             var bytes = RandomNumberGenerator.GetBytes(4);
             var otp = BitConverter.ToUInt32(bytes,0) %(uint)Math.Pow(10, 6);
-            return otp.ToString();
+            return otp.ToString("D6");
         }
 
         private async Task StoreOtp(string key, string otp, TimeSpan expirationTime)
@@ -36,16 +40,24 @@ namespace Auth.API.Application
             });
         }
 
-        private async Task<string?> GetOtpStored(string key)
+        public async Task<string?> GetOtp(string key)
         {
             string otp = await _cache.GetStringAsync($"otp:{key}");
 
             return otp;
         }
 
-        private async Task RemoveOtpStored(string key)
+        public async Task RemoveOtp(string key)
         {
             await _cache.RemoveAsync($"otp:{key}");
+        }
+
+        public async Task RegenerateOtp(string key, string otp, TimeSpan expirationTime)
+        {
+            await _cache.RefreshAsync($"otp:{key}", otp, new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = expirationTime
+            });
         }
     }
 }
