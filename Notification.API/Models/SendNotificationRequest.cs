@@ -8,6 +8,6 @@ namespace Notification.API.Models
         public string Message { get; set; }
         public string Subject { get; set; }
         public NotificationType Type { get; set; }
-        public string Sender { get; set; }  
+        public string To { get; set; }  
     }
 }

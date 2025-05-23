@@ -13,6 +13,14 @@ builder.Services.AddScoped<INotificationSender, NotificationSender>();
 builder.Services.AddScoped<ISmsSender,SmsSender>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+builder.Services.AddHttpClient<ISendGridClient, SendGridClient>(client =>
+{
+    client.BaseAddress = new Uri("https://api.sendgrid.com/v3/");
+});
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,6 +28,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 
 app.UseHttpsRedirection();
