@@ -52,12 +52,6 @@ namespace Auth.API.Application
             await _cache.RemoveAsync($"otp:{key}");
         }
 
-        public async Task RegenerateOtp(string key, string otp, TimeSpan expirationTime)
-        {
-            await _cache.RefreshAsync($"otp:{key}", otp, new DistributedCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = expirationTime
-            });
-        }
+    
     }
 }
