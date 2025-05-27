@@ -1,6 +1,10 @@
 using Azure.Identity;
 using Notification.API.Interfaces;
+using Notification.API.Interfaces.SendGrid;
+using Notification.API.Interfaces.Twilio;
 using Notification.API.Services;
+using Notification.API.Services.SendGrid;
+using Notification.API.Services.Twilio;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<INotificationSender, NotificationSender>();
 builder.Services.AddScoped<ISmsSender,SmsSender>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ITwilioSender, TwilioSender>();
 
 builder.Services.AddHttpClient<ISendGridClient, SendGridClient>(client =>
 {

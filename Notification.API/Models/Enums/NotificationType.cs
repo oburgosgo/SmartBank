@@ -2,7 +2,7 @@
 {
     public enum NotificationType
     {
-        Sms,
-        Email
+        Sms=1,
+        Email=2
     }
 }

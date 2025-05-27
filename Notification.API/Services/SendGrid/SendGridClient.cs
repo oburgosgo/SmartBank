@@ -1,10 +1,10 @@
-﻿using Notification.API.Interfaces;
+﻿using Notification.API.Interfaces.SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
-namespace Notification.API.Services
+namespace Notification.API.Services.SendGrid
 {
     public class SendGridClient : ISendGridClient
     {
@@ -27,7 +27,7 @@ namespace Notification.API.Services
                     }
                 },
                 from = new { email = _fromEmail },
-                subject = subject,
+                subject,
                 content = new[]
                 {
                     new { type = "text/html", value = messageHtml }

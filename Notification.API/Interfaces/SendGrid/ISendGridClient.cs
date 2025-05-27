@@ -1,4 +1,4 @@
-﻿namespace Notification.API.Interfaces
+﻿namespace Notification.API.Interfaces.SendGrid
 {
     public interface ISendGridClient
     {

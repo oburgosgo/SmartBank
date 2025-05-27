@@ -1,5 +1,6 @@
 ﻿
 using Notification.API.Interfaces;
+using Notification.API.Interfaces.SendGrid;
 using Notification.API.Models;
 
 namespace Notification.API.Services
