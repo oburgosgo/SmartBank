@@ -13,7 +13,7 @@ namespace Notification.API.Services
         private string _fromEmail;
         public SendGridClient(HttpClient httpClient, IConfiguration configuration) { 
             _httpClient = httpClient;
-            _apiKey = configuration["SendGrid:ApiKey"];
+            _apiKey = configuration["SendGridApiKey"];
             _fromEmail = configuration["SendGrid:FromEmail"];
         }
         public async Task<bool> SendEmail(string to, string subject, string messageHtml)

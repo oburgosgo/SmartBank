@@ -2,6 +2,7 @@ using SmartBank.Application.Mappings;
 using SmartBank.Infrastructure;
 using SmartBank.Application;
 using Microsoft.IdentityModel.Tokens;
+using Azure.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,6 +28,9 @@ builder.Services.AddAuthentication("Bearer")
 
 builder.Services.AddAuthorization();
 
+builder.Configuration.AddAzureKeyVault(
+    new Uri(builder.Configuration["Azure:KeyVaultUrl"]), 
+    new DefaultAzureCredential());
 
 var app = builder.Build();
 

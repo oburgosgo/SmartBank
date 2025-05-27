@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Notification.API.Interfaces;
 using Notification.API.Services;
 
@@ -20,6 +21,13 @@ builder.Services.AddHttpClient<ISendGridClient, SendGridClient>(client =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Configuration.AddAzureKeyVault(
+
+    new Uri(builder.Configuration["Azure:KeyVaultUrl"]),
+    new DefaultAzureCredential()
+    );
+
 
 var app = builder.Build();
 

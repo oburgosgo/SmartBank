@@ -2,6 +2,7 @@ using Auth.API.Application;
 using Auth.API.Config;
 using Auth.API.Data;
 using Auth.API.Interfaces;
+using Azure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,7 @@ builder.Services.AddIdentityServer()
     .AddDeveloperSigningCredential();
 
 builder.Services.AddDbContext<AuthDBContext>(
-    options=>options.UseSqlServer(builder.Configuration.GetConnectionString("SecurityAPI")));
+    options => options.UseSqlServer(builder.Configuration["Security--ConnectionString"]));
 
 builder.Services.AddScoped<IUser, UserBLL>();
 builder.Services.AddScoped<IAuth, AuthBLL>();
@@ -47,10 +48,13 @@ builder.Services.AddScoped<IOtpProvider, OtpProvider>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Configuration.AddAzureKeyVault(
+    new Uri(builder.Configuration["Azure:KeyVaultUrl"]), 
+    new DefaultAzureCredential());
+
 builder.Services.AddStackExchangeRedisCache(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("Redis");
-    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+{    options.Configuration = builder.Configuration[""];
     options.InstanceName = "AuthAPI_";
 });
 

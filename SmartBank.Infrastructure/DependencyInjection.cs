@@ -12,7 +12,7 @@ namespace SmartBank.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<ApplicationDbContext>(options=> options.UseSqlServer(config.GetConnectionString("SmartBankConnection")));
+            services.AddDbContext<ApplicationDbContext>(options=> options.UseSqlServer(config["SmartBank--ConnectionString"]));
 
             
             services.AddScoped<IClientRepository, ClientRepository>();
