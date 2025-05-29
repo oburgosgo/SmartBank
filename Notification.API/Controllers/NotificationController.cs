@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Notification.API.Interfaces;
 using Notification.API.Models;
+using SmartBank.Shared.API.Reponse;
 
 namespace Notification.API.Controllers
 {
@@ -21,8 +22,11 @@ namespace Notification.API.Controllers
         [HttpPost]
         public async Task<IActionResult> SendNotification([FromBody]SendNotificationRequest request)
         {
+           
             var result = await _notificationSender.SendNotification(request);
-            return Ok(result);
+           
+            return Ok(APIResponse<object>.Ok(result,"Notification has been sent succesfully"));
+           
         }
 
     }

@@ -17,8 +17,11 @@ namespace SmartBank.Shared.API.Reponse
         public static APIResponse<T> Ok(T? data, string message) =>
              new() { Success = true, Data = data, Message = message };
 
-        public static APIResponse<T> Failed(string message)=>
-            new() { Success = false,Message = message};
+        public static APIResponse<T> Failed(string message, List<string>? errors) =>
+            new() { Success = false,Message = message, Errors=errors};
+
+        public static APIResponse<T> Failed(string message) =>
+          new() { Success = false, Message = message };
 
     }
 }

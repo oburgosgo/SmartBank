@@ -21,7 +21,7 @@ namespace Notification.API.Services
                 case NotificationType.Email:
                     return await _emailSender.SendNotification(request);
                 case NotificationType.Sms:
-                    return await _smsSender.SendNotification(request);
+                    return await _smsSender.SendNotification(request); 
                 default:
                     return false;
             }

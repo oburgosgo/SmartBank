@@ -32,6 +32,7 @@ builder.Configuration.AddAzureKeyVault(
     new Uri(builder.Configuration["Azure:KeyVaultUrl"]), 
     new DefaultAzureCredential());
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

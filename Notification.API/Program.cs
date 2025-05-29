@@ -1,16 +1,26 @@
 using Azure.Identity;
+using FluentValidation;
 using Notification.API.Interfaces;
 using Notification.API.Interfaces.SendGrid;
 using Notification.API.Interfaces.Twilio;
 using Notification.API.Services;
 using Notification.API.Services.SendGrid;
 using Notification.API.Services.Twilio;
+using Notification.API.Validators;
+using SmartBank.Shared.API.Filters;
+using SmartBank.Shared.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    //options.Filters.Add<ValidationFilter>();
+});
+
+builder.Services.AddValidatorsFromAssemblyContaining<NotificationRequestValidator>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -18,6 +28,8 @@ builder.Services.AddScoped<INotificationSender, NotificationSender>();
 builder.Services.AddScoped<ISmsSender,SmsSender>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ITwilioSender, TwilioSender>();
+
+//builder.Services.AddScoped<ValidationFilter>();
 
 builder.Services.AddHttpClient<ISendGridClient, SendGridClient>(client =>
 {
@@ -32,7 +44,6 @@ builder.Configuration.AddAzureKeyVault(
     new Uri(builder.Configuration["Azure:KeyVaultUrl"]),
     new DefaultAzureCredential()
     );
-
 
 var app = builder.Build();
 
@@ -49,6 +60,8 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+//app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
