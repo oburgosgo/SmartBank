@@ -1,5 +1,4 @@
 ﻿using Notification.API.Models.Enums;
-using System.Globalization;
 
 namespace Notification.API.Models
 {

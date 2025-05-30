@@ -3,10 +3,13 @@ using FluentValidation;
 using Notification.API.Interfaces;
 using Notification.API.Interfaces.SendGrid;
 using Notification.API.Interfaces.Twilio;
+using Notification.API.Models;
 using Notification.API.Services;
 using Notification.API.Services.SendGrid;
 using Notification.API.Services.Twilio;
 using Notification.API.Validators;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Enums;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using SmartBank.Shared.API.Filters;
 using SmartBank.Shared.API.Middleware;
 
@@ -14,12 +17,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers(options =>
-{
-    //options.Filters.Add<ValidationFilter>();
-});
+builder.Services.AddControllers();
 
 builder.Services.AddValidatorsFromAssemblyContaining<NotificationRequestValidator>();
+
+builder.Services.AddFluentValidationAutoValidation(options =>
+{
+    options.DisableBuiltInModelValidation =true;
+    options.ValidationStrategy = ValidationStrategy.All;
+    options.EnableNullBindingSourceAutomaticValidation =true;
+    options.OverrideDefaultResultFactoryWith<ValidatorResultFactory>();
+});
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -29,7 +38,6 @@ builder.Services.AddScoped<ISmsSender,SmsSender>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ITwilioSender, TwilioSender>();
 
-//builder.Services.AddScoped<ValidationFilter>();
 
 builder.Services.AddHttpClient<ISendGridClient, SendGridClient>(client =>
 {
@@ -61,8 +69,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-//app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
 app.Run();
+

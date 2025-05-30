@@ -6,9 +6,10 @@ using System.Text.RegularExpressions;
 
 namespace Notification.API.Validators
 {
-    public class NotificationRequestValidator: AbstractValidator<SendNotificationRequest>
+    public sealed class NotificationRequestValidator: AbstractValidator<SendNotificationRequest>
     {
         public NotificationRequestValidator() {
+            Console.WriteLine("NotificationRequestValidator initialized");
 
             RuleFor(x => x.Message).NotEmpty().WithMessage("Message is required");
             RuleFor(x => x.Type).IsInEnum().WithMessage("Invalid Notification type");
@@ -17,7 +18,7 @@ namespace Notification.API.Validators
                 .MaximumLength(200).WithMessage("Subject must be less than 200 characters");
 
             RuleFor(x => x.To).NotEmpty().WithMessage("To is required").
-                Must((model, to) => IsValidDestination(to, model.Type)).WithMessage("Invalid format for selected type.");
+                Must((model, to) => IsValidDestination(to, model.Type)).WithMessage("To: Invalid format for selected type.");
         }
 
 
